@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("public/fonts/Vazirmatn[wght].woff2")
+      format("woff2 supports variations"),
+    url("public/fonts/Vazirmatn[wght].woff2") format("woff2-variations"),
+    url("public/fonts/Vazirmatn[wght].ttf") format("ttf");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --white: #ffffff;
+  --background-color: #f7f8f8;
+  --border-color: #e4e4e4;
+  --header-color: #282828;
+  --input-color: #f2f2f2;
+  --button-color: #55a3f0;
+  --deleteBtn-color: #dfdfdf;
+  --link-color: #3a8bed;
+  --green: #4ade80;
+  --red: #f43f5e;
+}
+
+body {
+  background-color: var(--background-color);
+  font-family: Vazirmatn;
+  font-weight: 400;
+  max-width: 1440px;
+  margin: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+button {
+  border: 0;
+  outline: none;
+  background-color: unset;
+}
+
+.input,
+.button {
+  font-family: Vazirmatn;
+  width: 400px;
+  height: 53px;
+  border-radius: 15px;
+}
+
+.input {
+  background-color: var(--input-color);
+  padding: 0 15px;
+  margin-bottom: 1em;
+}
+
+.input::placeholder {
+  font-size: 14px;
+  color: var(--header-color);
+  opacity: 0.5;
+}
+
+.button {
+  background-color: var(--button-color);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--white);
+  margin: 19px 0;
+}
+
+.modal-backdrop {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(51, 51, 51, 0.49);
+  backdrop-filter: blur(10);
+}
+
+.modal-container {
+  background-color: var(--white);
+  border-radius: 30px;
+  padding: 31px 36px;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--header-color);
+  margin-bottom: 6px;
+  width: 100%;
+  text-align: right;
+}
+
+.input-label input {
+  width: 389px;
+  height: 41px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--input-color);
+}
+
+.input-label input::placeholder {
+  font-family: Vazirmatn;
+  font-size: 14px;
+  font-weight: 300;
+  color: #8d8d8d;
+}
