@@ -10,7 +10,7 @@ import AddEditeModal from "./AddEditeModal";
 import { useAddNewProduct } from "../../hooks/mutations";
 import { useCheckToken } from "../../hooks/checkToken";
 
-function AddProduct() {
+function AddProduct({ onMultiDel, multiDel }) {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -43,19 +43,25 @@ function AddProduct() {
         <CiGrid41 />
         <p>مدیریت کالا</p>
       </div>
-      <Button
-        text="افزودن محصول"
-        onOpen={() => useCheckToken(setAddModalOpen(true), navigate)}
-      />
-      {addModalOpen && (
-        <AddEditeModal
-          title="ایجاد محصول جدید"
-          onClose={() => setAddModalOpen(false)}
-          handleSubmit={handleSubmit}
-          register={register}
-          onHandle={addNewProduct}
+      <div>
+        <Button
+          text={multiDel ? "حذف کنید" : "حذف گروهی"}
+          onOpen={onMultiDel}
         />
-      )}
+        <Button
+          text="افزودن محصول"
+          onOpen={() => useCheckToken(() => setAddModalOpen(true), navigate)}
+        />
+        {addModalOpen && (
+          <AddEditeModal
+            title="ایجاد محصول جدید"
+            onClose={() => setAddModalOpen(false)}
+            handleSubmit={handleSubmit}
+            register={register}
+            onHandle={addNewProduct}
+          />
+        )}
+      </div>
     </div>
   );
 }

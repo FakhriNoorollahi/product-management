@@ -1,10 +1,9 @@
 import React from "react";
 import { tableTitles } from "../../utils/constants";
 import styles from "./Products.module.css";
+import Product from "./SingleProduct/Product";
 
-import Product from "./Product";
-
-function ProductsTable({ isPending, data }) {
+function ProductsTable({ isPending, data, multipleDelOpen, register }) {
   return (
     <table className={styles.table}>
       <thead>
@@ -26,7 +25,14 @@ function ProductsTable({ isPending, data }) {
             <td colSpan="5">کالایی با این نام وجود ندارد</td>
           </tr>
         ) : (
-          data?.map((item) => <Product key={item.id} product={item} />)
+          data?.map((item) => (
+            <Product
+              key={item.id}
+              product={item}
+              multipleDelOpen={multipleDelOpen}
+              register={register}
+            />
+          ))
         )}
       </tbody>
     </table>

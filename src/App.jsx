@@ -3,6 +3,7 @@ import RegisterFormPage from "./pages/RegisterFormPage";
 import LoginFormPage from "./pages/LoginFormPage";
 import ProductsPage from "./pages/ProductsPage";
 import Layout from "./components/Layout";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="login" element={<LoginFormPage />} />
         </Route>
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

@@ -125,9 +125,11 @@
   border-bottom: 1px solid var(--input-color);
 }
 
-.table tbody td:last-child {
+.columnBtns {
   display: flex;
+  align-items: center;
   gap: 14px;
+  height: 20px;
 }
 
 .table tbody tr button svg {
@@ -135,13 +137,30 @@
   height: 20px;
 }
 
-.table tbody tr button:first-child svg {
+.productInfoModalBtn svg {
+  color: var(--link-color);
+}
+
+.productEditeModalBtn svg {
   color: var(--green);
 }
 
-.table tbody tr button:last-child svg {
+.productDelModalBtn svg {
   color: var(--red);
 }
+
+.checkbox {
+  width: 20px;
+  height: 100%;
+}
+
+.checkbox input {
+  width: 15px;
+  height: 100%;
+  accent-color: var(--red);
+}
+
+/* modal */
 
 .modal {
   display: flex;
@@ -226,4 +245,38 @@
 .btns button:first-child {
   background-color: var(--button-color);
   color: var(--white);
+}
+
+/* Product information modal */
+
+.productInfoModal {
+  width: 250px;
+  height: 150px;
+}
+
+.headerModalBtn svg {
+  color: var(--red);
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+}
+
+.infoDiv {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.infoDiv span:first-child {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.infoDiv span:last-child {
+  font-size: 14px;
 }

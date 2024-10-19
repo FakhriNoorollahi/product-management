@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { addUser, loginUser } from "../services/authServices";
 import {
   addProducts,
+  deleteMultiProduct,
   deleteProduct,
   editeProduct,
 } from "../services/productsServices";
@@ -40,5 +41,10 @@ export function useEditeProduct() {
 export function useDeleteProduct() {
   const { mutate } = useMutation({ mutationFn: deleteProduct });
 
+  return { mutate };
+}
+
+export function useDeleteMultiProduct() {
+  const { mutate } = useMutation({ mutationFn: deleteMultiProduct });
   return { mutate };
 }
