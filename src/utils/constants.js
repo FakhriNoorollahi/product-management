@@ -16,4 +16,9 @@ export const AddEditeFormTitles = [
   { id: 3, title: "قیمت", placeHolder: "قیمت", name: "price" },
 ];
 
-export const productInformation = ["name", "price", "quantity"];
+export const productInformation = ["name", "quantity", "price"];
+
+export const inputForm = [
+  { id: 1, name: "username", type: "text", placeHolder: "نام کاربری" },
+  { id: 2, name: "password", type: "password", placeHolder: "رمز عبور" },
+];

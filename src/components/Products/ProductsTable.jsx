@@ -4,7 +4,7 @@ import styles from "./Products.module.css";
 
 import Product from "./Product";
 
-function ProductsTable({ isPending, data, token }) {
+function ProductsTable({ isPending, data }) {
   return (
     <table className={styles.table}>
       <thead>
@@ -26,9 +26,7 @@ function ProductsTable({ isPending, data, token }) {
             <td colSpan="5">کالایی با این نام وجود ندارد</td>
           </tr>
         ) : (
-          data?.map((item) => (
-            <Product key={item.id} product={item} token={token} />
-          ))
+          data?.map((item) => <Product key={item.id} product={item} />)
         )}
       </tbody>
     </table>

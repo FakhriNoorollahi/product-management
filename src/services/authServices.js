@@ -7,7 +7,3 @@ export const addUser = async (data) => {
 export const loginUser = async (data) => {
   return await api.post("/auth/login", data);
 };
-
-export const getProducts = async () => {
-  return await api.get("/products");
-};

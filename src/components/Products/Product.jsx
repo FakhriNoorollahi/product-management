@@ -1,38 +1,42 @@
 import React, { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { BiMessageSquareEdit } from "react-icons/bi";
 import { HiTrash } from "react-icons/hi";
-import Modal from "../../ui/Modal";
 import styles from "./Products.module.css";
+import Modal from "../../ui/Modal";
 import AddEditeModal from "./AddEditeModal";
-import toast from "react-hot-toast";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteProduct, editeProduct } from "../../services/productsServices";
-import { useForm } from "react-hook-form";
+import { useDeleteProduct, useEditeProduct } from "../../hooks/mutations";
+import { useCheckToken } from "../../hooks/checkToken";
 
-function Product({ product, token }) {
+function Product({ product }) {
   const { id, name, quantity, price } = product;
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editeModalOpen, setEditeModalOpen] = useState(false);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { handleSubmit, register, reset } = useForm();
-  const { mutate } = useMutation({
-    mutationFn: editeProduct,
-  });
+  const { mutate } = useEditeProduct();
 
   const editeProducts = (data) => {
-    mutate({id,data}, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-        toast.success("کالا با موفقیت ویرایش شد");
-        setEditeModalOpen(false);
-      },
-      onError: (err) => {
-        toast.error(err.response.data.message);
-        setEditeModalOpen(false);
-      },
-    });
-    reset();
+    mutate(
+      { id, data },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["products"] });
+          toast.success("کالا با موفقیت ویرایش شد");
+          reset();
+          setEditeModalOpen(false);
+        },
+        onError: (err) => {
+          toast.error(err.response.data.message);
+          setEditeModalOpen(false);
+        },
+      }
+    );
   };
 
   return (
@@ -43,11 +47,7 @@ function Product({ product, token }) {
       <td>{id}</td>
       <td>
         <button
-          onClick={() =>
-            token
-              ? setEditeModalOpen(true)
-              : toast.error("ابتدا وارد حساب کاربری خود شوید")
-          }
+          onClick={() => useCheckToken(setEditeModalOpen(true), navigate)}
         >
           <BiMessageSquareEdit />
         </button>
@@ -62,16 +62,16 @@ function Product({ product, token }) {
           />
         )}
         <button
-          onClick={() =>
-            token
-              ? setDeleteModalOpen(true)
-              : toast.error("ابتدا وارد حساب کاربری خود شوید")
-          }
+          onClick={() => useCheckToken(setDeleteModalOpen(true), navigate)}
         >
           <HiTrash />
         </button>
         {deleteModalOpen && (
-          <DeleteModal setDeleteModalOpen={setDeleteModalOpen} id={id} />
+          <DeleteModal
+            queryClient={queryClient}
+            setDeleteModalOpen={setDeleteModalOpen}
+            id={id}
+          />
         )}
       </td>
     </tr>
@@ -80,9 +80,8 @@ function Product({ product, token }) {
 
 export default Product;
 
-function DeleteModal({ setDeleteModalOpen, id }) {
-  const { mutate } = useMutation({ mutationFn: deleteProduct });
-  const queryClient = useQueryClient();
+function DeleteModal({ queryClient, setDeleteModalOpen, id }) {
+  const { mutate } = useDeleteProduct();
 
   const handleDelete = () => {
     mutate(id, {

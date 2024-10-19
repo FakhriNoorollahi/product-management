@@ -1,6 +1,6 @@
 import React from "react";
-import InputLabel from "../../ui/InputLabel";
 import styles from "./Products.module.css";
+import InputLabel from "../../ui/InputLabel";
 import { AddEditeFormTitles, productInformation } from "../../utils/constants";
 import Modal from "../../ui/Modal";
 
@@ -20,22 +20,21 @@ function AddEditeModal({
         <p>{title}</p>
         <form onSubmit={handleSubmit(onHandle)}>
           <div className={styles.inputLabel}>
-            {AddEditeFormTitles.map((item, index) => {
-              console.log(item);
-              return (
-                <InputLabel
-                  key={item.id}
-                  label={item.title}
-                  placeHolder={item.placeHolder}
-                  name={item.name}
-                  register={register}
-                  value={!product ? "" : product[info[index]]}
-                />
-              );
-            })}
+            {AddEditeFormTitles.map((item, index) => (
+              <InputLabel
+                key={item.id}
+                label={item.title}
+                placeHolder={item.placeHolder}
+                name={item.name}
+                register={register}
+                value={!product ? "" : product[info[index]]}
+              />
+            ))}
           </div>
           <div className={styles.btns}>
-            <button type="submit">ایجاد</button>
+            <button type="submit">
+              {product ? "ثبت اطلاعات جدید" : "ایجاد"}
+            </button>
             <button onClick={onClose}>انصراف</button>
           </div>
         </form>

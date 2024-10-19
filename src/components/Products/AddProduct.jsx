@@ -1,23 +1,21 @@
 import React, { useState } from "react";
-import { CiGrid41 } from "react-icons/ci";
-import Button from "../../ui/Button";
-import styles from "./Products.module.css";
-import AddEditeModal from "./AddEditeModal";
-import toast from "react-hot-toast";
-
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addProducts } from "../../services/productsServices";
+import toast from "react-hot-toast";
+import { CiGrid41 } from "react-icons/ci";
+import styles from "./Products.module.css";
+import Button from "../../ui/Button";
+import AddEditeModal from "./AddEditeModal";
+import { useAddNewProduct } from "../../hooks/mutations";
+import { useCheckToken } from "../../hooks/checkToken";
 
-function AddProduct({ token }) {
+function AddProduct() {
   const [addModalOpen, setAddModalOpen] = useState(false);
-
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   const { handleSubmit, register, reset } = useForm();
-  const { mutate } = useMutation({
-    mutationFn: addProducts,
-  });
+  const { mutate } = useAddNewProduct();
 
   const addNewProduct = (data) => {
     const { name, price, quantity } = data;
@@ -26,7 +24,7 @@ function AddProduct({ token }) {
       return;
     }
     mutate(data, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         queryClient.invalidateQueries({ queryKey: ["products"] });
         toast.success("کالا با موفقیت اضافه شد");
         setAddModalOpen(false);
@@ -47,11 +45,7 @@ function AddProduct({ token }) {
       </div>
       <Button
         text="افزودن محصول"
-        onOpen={() =>
-          token
-            ? setAddModalOpen(true)
-            : toast.error("ابتدا وارد حساب کاربری خود شوید")
-        }
+        onOpen={() => useCheckToken(setAddModalOpen(true), navigate)}
       />
       {addModalOpen && (
         <AddEditeModal

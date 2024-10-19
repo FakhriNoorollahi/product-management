@@ -1,9 +1,10 @@
 import React from "react";
+import Loader from "./Loader";
 
-function Button({ text, onOpen }) {
+function Button({ text, onOpen, type = "submit", isPending }) {
   return (
-    <button className="button" onClick={onOpen}>
-      {text}
+    <button type={type} className="button" onClick={onOpen}>
+      {isPending ? <Loader /> : text}
     </button>
   );
 }

@@ -3,11 +3,13 @@
 }
 
 .title {
+  display: block;
   font-weight: 700;
   font-size: 20px;
   text-align: center;
   color: var(--header-color);
   margin-bottom: 117px;
+  display: block;
 }
 
 .form {

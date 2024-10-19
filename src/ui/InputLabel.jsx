@@ -1,8 +1,6 @@
 import React from "react";
 
 function InputLabel({ label, placeHolder, name, register, value = "" }) {
-  console.log(name);
-
   return (
     <div className="input-label">
       <label htmlFor={name}>{label}</label>

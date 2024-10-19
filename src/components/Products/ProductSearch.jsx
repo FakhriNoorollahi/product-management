@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./Products.module.css";
 import { CiSearch } from "react-icons/ci";
+import styles from "./Products.module.css";
 
-function ProductSearch({ search, setSearch, token }) {
+function ProductSearch({ search, setSearch, token = "" }) {
   return (
     <div className={styles.searchContainer}>
       <CiSearch />
