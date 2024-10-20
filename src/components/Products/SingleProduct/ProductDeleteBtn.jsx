@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { HiTrash } from "react-icons/hi";
+import toast from "react-hot-toast";
 import styles from "../Products.module.css";
 import { useCheckToken } from "../../../hooks/checkToken";
 import { useDeleteProduct } from "../../../hooks/mutations";
@@ -21,8 +22,8 @@ function ProductDeleteBtn({ queryClient, navigate, id }) {
       {deleteModalOpen && (
         <DeleteModal
           queryClient={queryClient}
-          setDeleteModalOpen={setDeleteModalOpen}
           id={id}
+          onClose={() => setDeleteModalOpen(false)}
         />
       )}
     </>
@@ -31,15 +32,15 @@ function ProductDeleteBtn({ queryClient, navigate, id }) {
 
 export default ProductDeleteBtn;
 
-function DeleteModal({ queryClient, setDeleteModalOpen, id }) {
+function DeleteModal({ queryClient, id, onClose }) {
   const { mutate } = useDeleteProduct();
 
   const handleDelete = () => {
     mutate(id, {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["products"] });
-        toast.success("کالا با موفقیت حدف شد", { icon: "🗑" });
         onClose();
+        toast.success("کالا با موفقیت حدف شد", { icon: "🗑" });
       },
       onError: (err) => {
         toast.error(err.response.data.message);
@@ -55,7 +56,7 @@ function DeleteModal({ queryClient, setDeleteModalOpen, id }) {
         <p>آیا از حذف این محصول مطمئنید؟</p>
         <div className={styles.modalBtn}>
           <button onClick={handleDelete}>حذف</button>
-          <button onClick={() => setDeleteModalOpen(false)}>لغو</button>
+          <button onClick={onClose}>لغو</button>
         </div>
       </div>
     </Modal>

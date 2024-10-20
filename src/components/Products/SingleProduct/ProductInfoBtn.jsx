@@ -26,8 +26,6 @@ function ProductInfoBtn({ id }) {
 export default ProductInfoBtn;
 
 function ProductInformation({ id, onClose }) {
-  console.log(onClose);
-
   const { data, isPending } = useProductInfo(id);
 
   return (

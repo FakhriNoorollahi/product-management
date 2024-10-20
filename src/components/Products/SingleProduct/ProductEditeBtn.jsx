@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-// import styles from "./Products.module.css";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { BiMessageSquareEdit } from "react-icons/bi";
+import styles from "../Products.module.css";
 import AddEditeModal from "../AddEditeModal";
 import { useEditeProduct } from "../../../hooks/mutations";
-import { useForm } from "react-hook-form";
-import styles from "../Products.module.css";
-import { BiMessageSquareEdit } from "react-icons/bi";
 import { useCheckToken } from "../../../hooks/checkToken";
 
 function ProductEditeBtn({ queryClient, navigate, id, product }) {

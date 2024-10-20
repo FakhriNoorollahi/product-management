@@ -1,7 +1,7 @@
 import { api } from "./httpReq";
 
-export const getProducts = async () => {
-  return await api.get("/products");
+export const getProducts = async (page) => {
+  return await api.get(`/products?page=${page}`);
 };
 
 export const getProductInfo = async ({ queryKey }) => {
@@ -20,8 +20,7 @@ export const editeProduct = async ({ id, data }) => {
   return await api.put(`/products/${id}`, data);
 };
 
-export const deleteMultiProduct = async (ids) => {
-  console.log(ids);
-
-  return await api.delete(`/products`, ids);
+export const deleteMultiProduct = async (data) => {
+  const res = await api.delete("/products", data.ids);
+  console.log(res);
 };

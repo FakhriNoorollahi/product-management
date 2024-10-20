@@ -15,7 +15,7 @@ function Product({ product, multipleDelOpen, register }) {
     <tr>
       <td>{name}</td>
       <td>{quantity}</td>
-      <td>{price} هزار تومان</td>
+      <td>{price} تومان</td>
       <td>{id}</td>
       <td>
         <div className={styles.columnBtns}>
@@ -28,7 +28,7 @@ function Product({ product, multipleDelOpen, register }) {
           />
           {multipleDelOpen ? (
             <div className={styles.checkbox}>
-              <input type="checkbox" {...register("delMulti")} value={id} />
+              <input type="checkbox" {...register("ids")} value={id} />
             </div>
           ) : (
             <ProductDeleteBtn

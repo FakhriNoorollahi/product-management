@@ -2,8 +2,9 @@ import React from "react";
 import { tableTitles } from "../../utils/constants";
 import styles from "./Products.module.css";
 import Product from "./SingleProduct/Product";
+import Loader from "../../ui/Loader";
 
-function ProductsTable({ isPending, data, multipleDelOpen, register }) {
+function ProductsTable({ isPending, data, multipleDelOpen, register, error }) {
   return (
     <table className={styles.table}>
       <thead>
@@ -15,14 +16,15 @@ function ProductsTable({ isPending, data, multipleDelOpen, register }) {
         </tr>
       </thead>
       <tbody>
-        {isPending && (
+        {isPending ? (
           <tr>
-            <th>loading....</th>
+            <td style={{ textAlign: "center" }}>
+              <Loader color="#3a8bed" />
+            </td>
           </tr>
-        )}
-        {!data?.length ? (
+        ) : !data?.length || error ? (
           <tr style={{ textAlign: "center" }}>
-            <td colSpan="5">کالایی با این نام وجود ندارد</td>
+            <td colSpan="5">کالایی وجود ندارد</td>
           </tr>
         ) : (
           data?.map((item) => (
