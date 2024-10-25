@@ -6,9 +6,8 @@ import { useCheckToken } from "../../../hooks/checkToken";
 import { useDeleteProduct } from "../../../hooks/mutations";
 import Modal from "../../../ui/Modal";
 
-function ProductDeleteBtn({ queryClient, navigate, id }) {
+function ProductDeleteBtn({ navigate, id }) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-
   const openModal = () => setDeleteModalOpen(true);
 
   return (
@@ -20,11 +19,7 @@ function ProductDeleteBtn({ queryClient, navigate, id }) {
         <HiTrash />
       </button>
       {deleteModalOpen && (
-        <DeleteModal
-          queryClient={queryClient}
-          id={id}
-          onClose={() => setDeleteModalOpen(false)}
-        />
+        <DeleteModal id={id} onClose={() => setDeleteModalOpen(false)} />
       )}
     </>
   );
@@ -32,20 +27,13 @@ function ProductDeleteBtn({ queryClient, navigate, id }) {
 
 export default ProductDeleteBtn;
 
-function DeleteModal({ queryClient, id, onClose }) {
+function DeleteModal({ id, onClose }) {
   const { mutate } = useDeleteProduct();
 
   const handleDelete = () => {
     mutate(id, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-        onClose();
-        toast.success("کالا با موفقیت حدف شد", { icon: "🗑" });
-      },
-      onError: (err) => {
-        toast.error(err.response.data.message);
-        onClose();
-      },
+      onSuccess: () => onClose(),
+      onError: () => onClose(),
     });
   };
 

@@ -6,8 +6,7 @@ import ProductsTable from "./ProductsTable";
 import { useProducts } from "../../hooks/queries";
 import { useForm } from "react-hook-form";
 import { useDeleteMultiProduct } from "../../hooks/mutations";
-import Pagination from "./SingleProduct/Pagination";
-// import toast from "react-hot-toast";
+import Pagination from "../../ui/Pagination";
 
 function ProductsList() {
   const [search, setSearch] = useState("");
@@ -16,7 +15,7 @@ function ProductsList() {
   const [multipleDelOpen, setMultipleDelOpen] = useState(false);
   const { register, getValues } = useForm();
 
-  const products = data?.data.data.filter((item) =>
+  const products = data?.data?.data.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -25,13 +24,11 @@ function ProductsList() {
       setMultipleDelOpen(true);
       return;
     }
-
     handleButtonClick();
   };
   const { mutate } = useDeleteMultiProduct();
   const handleButtonClick = () => {
     const data = getValues();
-
     mutate(data);
     setMultipleDelOpen(false);
   };

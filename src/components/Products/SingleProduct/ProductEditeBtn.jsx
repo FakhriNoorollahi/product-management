@@ -1,33 +1,50 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { BiMessageSquareEdit } from "react-icons/bi";
 import styles from "../Products.module.css";
 import AddEditeModal from "../AddEditeModal";
 import { useEditeProduct } from "../../../hooks/mutations";
 import { useCheckToken } from "../../../hooks/checkToken";
+import toast from "react-hot-toast";
 
-function ProductEditeBtn({ queryClient, navigate, id, product }) {
+function ProductEditeBtn({ navigate, id, product }) {
   const [editeModalOpen, setEditeModalOpen] = useState(false);
   const { mutate } = useEditeProduct();
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register, reset, getValues } = useForm();
 
   const editeProducts = (data) => {
-    mutate(
-      { id, data },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["products"] });
-          toast.success("کالا با موفقیت ویرایش شد");
-          reset();
-          setEditeModalOpen(false);
-        },
-        onError: (err) => {
-          toast.error(err.response.data.message);
-          setEditeModalOpen(false);
-        },
-      }
-    );
+    const { name, quantity, price } = getValues();
+    const {
+      name: productName,
+      price: productPrice,
+      quantity: productQuantity,
+    } = product;
+    if (
+      productName === data.name &&
+      productQuantity === data.quantity &&
+      productPrice === data.price
+    ) {
+      toast("تغییری در اطلاعات ایجاد نکردید!", { icon: "❗" });
+      setEditeModalOpen(false);
+      return;
+    }
+
+    if (!name || !price || !quantity) {
+      toast.error("فیلدهای خالی را پر کنید");
+      return;
+    }
+
+    if (getValues)
+      mutate(
+        { id, data },
+        {
+          onSuccess: () => {
+            reset();
+            setEditeModalOpen(false);
+          },
+          onError: (err) => setEditeModalOpen(false),
+        }
+      );
   };
 
   return (

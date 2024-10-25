@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -12,27 +11,21 @@ import { useCheckToken } from "../../hooks/checkToken";
 
 function AddProduct({ onMultiDel, multiDel }) {
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register, reset, getValues } = useForm();
   const { mutate } = useAddNewProduct();
 
   const addNewProduct = (data) => {
-    const { name, price, quantity } = data;
-    if (!name && !price && !quantity) {
-      toast.error("پر کردن فیلدها اجباری است");
+    const { name, price, quantity } = getValues();
+
+    if (!name || !price || !quantity) {
+      toast.error("فیلدهای خالی را پر کنید");
       return;
     }
+
     mutate(data, {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: ["products"] });
-        toast.success("کالا با موفقیت اضافه شد");
-        setAddModalOpen(false);
-      },
-      onError: (err) => {
-        toast.error(err.response.data.message);
-        setAddModalOpen(false);
-      },
+      onSuccess: () => setAddModalOpen(false),
+      onError: () => setAddModalOpen(false),
     });
     reset();
   };
@@ -47,10 +40,11 @@ function AddProduct({ onMultiDel, multiDel }) {
         <Button
           text={multiDel ? "حذف کنید" : "حذف گروهی"}
           onOpen={onMultiDel}
+          nameOfClass={multiDel && "delete"}
         />
         <Button
           text="افزودن محصول"
-          onOpen={() => useCheckToken(() => setAddModalOpen(true), navigate)}
+          onButton={() => useCheckToken(() => setAddModalOpen(true), navigate)}
         />
         {addModalOpen && (
           <AddEditeModal

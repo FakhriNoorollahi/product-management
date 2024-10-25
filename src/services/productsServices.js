@@ -21,6 +21,8 @@ export const editeProduct = async ({ id, data }) => {
 };
 
 export const deleteMultiProduct = async (data) => {
-  const res = await api.delete("/products", data.ids);
-  console.log(res);
+  console.log(data);
+  console.log(JSON.stringify(data));
+
+  return await api.delete("/products", JSON.stringify(data));
 };

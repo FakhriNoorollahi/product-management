@@ -1,5 +1,4 @@
 import React from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import ProductInfoBtn from "./ProductInfoBtn";
 import ProductEditeBtn from "./ProductEditeBtn";
@@ -8,7 +7,6 @@ import styles from "../Products.module.css";
 
 function Product({ product, multipleDelOpen, register }) {
   const { id, name, quantity, price } = product;
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   return (
@@ -20,22 +18,13 @@ function Product({ product, multipleDelOpen, register }) {
       <td>
         <div className={styles.columnBtns}>
           <ProductInfoBtn id={id} />
-          <ProductEditeBtn
-            queryClient={queryClient}
-            navigate={navigate}
-            id={id}
-            product={product}
-          />
+          <ProductEditeBtn navigate={navigate} id={id} product={product} />
           {multipleDelOpen ? (
             <div className={styles.checkbox}>
               <input type="checkbox" {...register("ids")} value={id} />
             </div>
           ) : (
-            <ProductDeleteBtn
-              queryClient={queryClient}
-              navigate={navigate}
-              id={id}
-            />
+            <ProductDeleteBtn navigate={navigate} id={id} />
           )}
         </div>
       </td>

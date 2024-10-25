@@ -1,18 +1,18 @@
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/public/fonts/Vazirmatn[wght].woff2")
+      format("woff2 supports variations"),
+    url("/public/fonts/Vazirmatn[wght].woff2") format("woff2-variations");
+
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-@font-face {
-  font-family: "Vazirmatn";
-  src: url("public/fonts/Vazirmatn[wght].woff2")
-      format("woff2 supports variations"),
-    url("public/fonts/Vazirmatn[wght].woff2") format("woff2-variations"),
-    url("public/fonts/Vazirmatn[wght].ttf") format("ttf");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
 }
 
 :root {
@@ -28,9 +28,13 @@
   --red: #f43f5e;
 }
 
+html {
+  font-family: Vazirmatn, Helvetica, Tahoma, sans-serif;
+}
+
 body {
   background-color: var(--background-color);
-  font-family: Vazirmatn;
+
   font-weight: 400;
   max-width: 1440px;
   margin: auto;
@@ -77,6 +81,10 @@ button {
   font-weight: 600;
   color: var(--white);
   margin: 19px 0;
+}
+
+.button.delete {
+  background-color: var(--red);
 }
 
 .modal-backdrop {
@@ -150,4 +158,29 @@ button {
 .not-found p:last-child {
   font-size: 20px;
   font-weight: 500;
+}
+
+.paginationContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  gap: 12px;
+}
+
+.paginationBtns {
+  width: 35px;
+  height: 35px;
+  border-radius: 42px;
+  border: 2px solid #8d8d8d80;
+  font-size: 16px;
+  font-weight: 500;
+  color: #8d8d8d80;
+}
+
+.paginationBtnsActive {
+  background-color: var(--button-color);
+  color: var(--white);
+  font-weight: 400;
+  border: 0;
 }

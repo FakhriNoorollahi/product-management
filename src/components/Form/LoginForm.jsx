@@ -1,28 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import Form from "../../ui/Form/Form";
-import { setCookie } from "../../utils/cookie";
+import { getCookie, setCookie } from "../../utils/cookie";
 import { useLogin } from "../../hooks/mutations";
+import { saveLocalStorage } from "../../utils/localStorage";
+import toast from "react-hot-toast";
+import { checkFormInputIsEmpty } from "../../utils/helper";
 
 function LoginForm() {
-  const { register, handleSubmit } = useForm();
-  const navigate = useNavigate();
   const { mutate, isPending } = useLogin();
+  const { register, handleSubmit, getValues } = useForm();
+  const navigate = useNavigate();
+  const token = getCookie("token");
 
   const handleForm = (data) => {
+    const { username } = data;
+
     mutate(data, {
       onSuccess: ({ data }) => {
         setCookie(data.token);
-        toast.success("You have successfully logged in.");
+        saveLocalStorage("username", username);
         navigate("/products");
-      },
-      onError: (err) => {
-        toast.error(err.response.data.message);
       },
     });
   };
+
+  const handleButton = () => {
+    const { username, password } = getValues();
+    checkFormInputIsEmpty({username, password});
+  };
+
+  useEffect(() => {
+    if (token) navigate("/products");
+  }, [token, navigate]);
 
   return (
     <Form
@@ -33,6 +44,7 @@ function LoginForm() {
       textLink="ایجاد حساب کاربری"
       pathLink="/auth/register"
       register={register}
+      onButton={handleButton}
     />
   );
 }

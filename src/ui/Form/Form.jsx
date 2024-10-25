@@ -14,6 +14,7 @@ function Form({
   textLink,
   pathLink,
   children,
+  onButton,
 }) {
   return (
     <div className={styles.formContainer}>
@@ -34,7 +35,12 @@ function Form({
             />
           ))}
           {children}
-          <Button type="submit" text={textButton} isPending={isPending} />
+          <Button
+            type="submit"
+            text={textButton}
+            isPending={isPending}
+            onButton={onButton}
+          />
           <NavLink to={pathLink}>{textLink}</NavLink>
         </form>
       </div>

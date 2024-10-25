@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Input from "../../ui/Input";
 import Form from "../../ui/Form/Form";
 import { useRegister } from "../../hooks/mutations";
+import { getCookie } from "../../utils/cookie";
+import { checkFormInputIsEmpty } from "../../utils/helper";
 
 function RegisterForm() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, getValues } = useForm();
   const navigate = useNavigate();
   const { mutate, isPending } = useRegister();
+  const token = getCookie("token");
 
   const handleForm = (data) => {
     const { username, password, confirmPassword } = data;
@@ -22,14 +25,19 @@ function RegisterForm() {
     mutate(
       { username, password },
       {
-        onSuccess: ({ data }) => {
-          toast.success(data.message);
-          navigate("/auth/login");
-        },
-        onError: (err) => toast.error(err.response.data.message),
+        onSuccess: () => navigate("/auth/login"),
       }
     );
   };
+
+  const handlerButton = () => {
+    const { username, password, confirmPassword } = getValues();
+    checkFormInputIsEmpty({ username, password, confirmPassword });
+  };
+
+  useEffect(() => {
+    if (token) navigate("/products");
+  }, [token, navigate]);
 
   return (
     <Form
@@ -40,6 +48,7 @@ function RegisterForm() {
       textLink="حساب کاربری دارید؟"
       pathLink="/auth/login"
       register={register}
+      onButton={handlerButton}
     >
       <Input
         register={register}
