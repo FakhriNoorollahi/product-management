@@ -13,8 +13,9 @@ function ProductsList() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [pageSearch, setPageSearch] = useState(1);
-  const { data, isPending, isError } = useProducts(page, search, pageSearch);
-  console.log(data, isPending);
+  const { data, isFetching, isError } = useProducts(page, search, pageSearch);
+
+  console.log(data, isError);
 
   const [multipleDelOpen, setMultipleDelOpen] = useState(false);
   const { register, getValues, reset } = useForm();
@@ -47,11 +48,10 @@ function ProductsList() {
       setSearchParams({ page, limit: 10 });
       return;
     }
-
     setSearchParams({ page: pageSearch, limit: 10, name: search });
-  }, [page, search]);
+  }, [page, search, pageSearch]);
 
-  useState(() => {
+  useEffect(() => {
     setPageSearch(1);
   }, [search]);
 
@@ -63,7 +63,7 @@ function ProductsList() {
         onMultiDel={handlerMultiDelButton}
       />
       <ProductsTable
-        isPending={isPending}
+        isPending={isFetching}
         products={data?.data.data}
         multipleDelOpen={multipleDelOpen}
         register={register}

@@ -2,13 +2,13 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getProducts, getProductInfo } from "../services/productsServices";
 
 export function useProducts(page, search, pageSearch) {
-  const { data, isPending, isError } = useQuery({
+  const { data, isError, isFetching } = useQuery({
     queryKey: ["products", page, search, pageSearch],
     queryFn: () => getProducts(page, search, pageSearch),
     placeholderData: keepPreviousData,
   });
 
-  return { data, isPending, isError };
+  return { data, isFetching, isError };
 }
 
 export function useProductInfo(id) {
