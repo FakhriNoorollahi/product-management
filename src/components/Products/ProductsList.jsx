@@ -12,7 +12,9 @@ import { useSearchParams } from "react-router-dom";
 function ProductsList() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const { data, isPending, isError } = useProducts(page, search.toLowerCase());
+  const [pageSearch, setPageSearch] = useState(1);
+  const { data, isPending, isError } = useProducts(page, search, pageSearch);
+  console.log(data, isPending);
 
   const [multipleDelOpen, setMultipleDelOpen] = useState(false);
   const { register, getValues, reset } = useForm();
@@ -45,11 +47,12 @@ function ProductsList() {
       setSearchParams({ page, limit: 10 });
       return;
     }
-    setSearchParams({ page, limit: 10, name: search });
+
+    setSearchParams({ page: pageSearch, limit: 10, name: search });
   }, [page, search]);
 
-  useEffect(() => {
-    setPage(1);
+  useState(() => {
+    setPageSearch(1);
   }, [search]);
 
   return (
@@ -67,8 +70,8 @@ function ProductsList() {
         error={isError}
       />
       <Pagination
-        page={page}
-        setPage={setPage}
+        page={search ? pageSearch : page}
+        setPage={search ? setPageSearch : setPage}
         totalPage={data?.data.totalPages}
       />
     </div>

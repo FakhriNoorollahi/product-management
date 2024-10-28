@@ -1,7 +1,14 @@
 import { api } from "./httpReq";
 
-export const getProducts = async (page, search) => {
-  return await api.get(`/products?page=${page}&limit=10&name=${search}`);
+export const getProducts = async (page, search, pageSearch) => {
+  if (search)
+    return await api.get(
+      `/products?${
+        pageSearch > 1 && `page=${pageSearch}&`
+      }limit=10&name=${search}`
+    );
+
+  return await api.get(`/products?page=${page}&limit=10&`);
 };
 
 export const getProductInfo = async ({ queryKey }) => {
