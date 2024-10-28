@@ -36,7 +36,7 @@ export function useAddNewProduct() {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       toast.success("کالا با موفقیت اضافه شد");
     },
-    onError: () => toast.error(err.response.data.message),
+    onError: (err) => toast.error(err.response.data.message),
   });
   return { mutate };
 }
@@ -61,7 +61,7 @@ export function useDeleteProduct() {
     mutationFn: deleteProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-      toast.success("کالا با موفقیت حدف شد", { icon: "🗑" });
+      toast.success("کالا با موفقیت حذف شد", { icon: "🗑" });
     },
     onError: (err) => toast.error(err.response.data.message),
   });
@@ -70,6 +70,14 @@ export function useDeleteProduct() {
 }
 
 export function useDeleteMultiProduct() {
-  const { mutate } = useMutation({ mutationFn: deleteMultiProduct });
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: deleteMultiProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("کالاهای انتخابی با موفقیت حذف شدند", { icon: "🗑" });
+    },
+    onError: (err) => toast.error(err.response.data.message),
+  });
   return { mutate };
 }

@@ -5,6 +5,7 @@ export const createPaginationArray = (totalPage) => {
   for (let i = 1; i <= totalPage; i++) {
     arr.push(i);
   }
+
   return arr;
 };
 

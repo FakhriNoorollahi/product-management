@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { CiGrid41 } from "react-icons/ci";
@@ -7,11 +6,9 @@ import styles from "./Products.module.css";
 import Button from "../../ui/Button";
 import AddEditeModal from "./AddEditeModal";
 import { useAddNewProduct } from "../../hooks/mutations";
-import { useCheckToken } from "../../hooks/checkToken";
 
 function AddProduct({ onMultiDel, multiDel }) {
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const navigate = useNavigate();
   const { handleSubmit, register, reset, getValues } = useForm();
   const { mutate } = useAddNewProduct();
 
@@ -39,13 +36,10 @@ function AddProduct({ onMultiDel, multiDel }) {
       <div>
         <Button
           text={multiDel ? "حذف کنید" : "حذف گروهی"}
-          onOpen={onMultiDel}
+          onButton={() => onMultiDel()}
           nameOfClass={multiDel && "delete"}
         />
-        <Button
-          text="افزودن محصول"
-          onButton={() => useCheckToken(() => setAddModalOpen(true), navigate)}
-        />
+        <Button text="افزودن محصول" onButton={() => setAddModalOpen(true)} />
         {addModalOpen && (
           <AddEditeModal
             title="ایجاد محصول جدید"

@@ -4,7 +4,13 @@ import styles from "./Products.module.css";
 import Product from "./SingleProduct/Product";
 import Loader from "../../ui/Loader";
 
-function ProductsTable({ isPending, data, multipleDelOpen, register, error }) {
+function ProductsTable({
+  isPending,
+  products,
+  multipleDelOpen,
+  register,
+  error,
+}) {
   return (
     <table className={styles.table}>
       <thead>
@@ -22,12 +28,12 @@ function ProductsTable({ isPending, data, multipleDelOpen, register, error }) {
               <Loader color="#3a8bed" />
             </td>
           </tr>
-        ) : !data?.length || error ? (
+        ) : !products?.length || error ? (
           <tr style={{ textAlign: "center" }}>
             <td colSpan="5">کالایی وجود ندارد</td>
           </tr>
         ) : (
-          data?.map((item) => (
+          products?.map((item) => (
             <Product
               key={item.id}
               product={item}

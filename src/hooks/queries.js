@@ -1,10 +1,10 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getProducts, getProductInfo } from "../services/productsServices";
 
-export function useProducts(page) {
+export function useProducts(page, search) {
   const { data, isPending, isError } = useQuery({
-    queryKey: ["products", page],
-    queryFn: () => getProducts(page),
+    queryKey: ["products", page, search],
+    queryFn: () => getProducts(page, search),
     placeholderData: keepPreviousData,
   });
 

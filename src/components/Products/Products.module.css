@@ -53,39 +53,16 @@
   border: 1px solid var(--border-color);
 }
 
-.informatin > div > p {
+.informatin > div > p:first-child {
   font-size: 16px;
   font-weight: 400;
   color: var(--header-color);
 }
 
-.logOutBtn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logOutBtn p {
+.informatin > div > p:last-child {
   font-size: 14px;
   font-weight: 300;
   color: var(--header-color);
-}
-
-.logOutBtn button {
-  width: 16px;
-  height: 16px;
-}
-.logOutBtn svg {
-  width: inherit;
-  height: inherit;
-}
-.logoutIcon {
-  color: var(--red);
-  margin-right: 5px;
-}
-
-.logOutBtn .loginIcon {
-  color: var(--green);
 }
 
 /* add Product */

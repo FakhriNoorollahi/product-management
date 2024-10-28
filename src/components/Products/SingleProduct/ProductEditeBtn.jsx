@@ -4,13 +4,14 @@ import { BiMessageSquareEdit } from "react-icons/bi";
 import styles from "../Products.module.css";
 import AddEditeModal from "../AddEditeModal";
 import { useEditeProduct } from "../../../hooks/mutations";
-import { useCheckToken } from "../../../hooks/checkToken";
 import toast from "react-hot-toast";
+import { getCookie } from "../../../utils/cookie";
 
-function ProductEditeBtn({ navigate, id, product }) {
+function ProductEditeBtn({ id, product }) {
   const [editeModalOpen, setEditeModalOpen] = useState(false);
   const { mutate } = useEditeProduct();
   const { handleSubmit, register, reset, getValues } = useForm();
+  const token = getCookie("token");
 
   const editeProducts = (data) => {
     const { name, quantity, price } = getValues();
@@ -22,7 +23,8 @@ function ProductEditeBtn({ navigate, id, product }) {
     if (
       productName === data.name &&
       productQuantity === data.quantity &&
-      productPrice === data.price
+      productPrice === data.price &&
+      token
     ) {
       toast("تغییری در اطلاعات ایجاد نکردید!", { icon: "❗" });
       setEditeModalOpen(false);
@@ -42,7 +44,7 @@ function ProductEditeBtn({ navigate, id, product }) {
             reset();
             setEditeModalOpen(false);
           },
-          onError: (err) => setEditeModalOpen(false),
+          onError: () => setEditeModalOpen(false),
         }
       );
   };
@@ -51,7 +53,7 @@ function ProductEditeBtn({ navigate, id, product }) {
     <>
       <button
         className={styles.productEditeModalBtn}
-        onClick={() => useCheckToken(() => setEditeModalOpen(true), navigate)}
+        onClick={() => setEditeModalOpen(true)}
       >
         <BiMessageSquareEdit />
       </button>

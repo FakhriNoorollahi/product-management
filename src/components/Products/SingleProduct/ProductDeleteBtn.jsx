@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import { HiTrash } from "react-icons/hi";
-import toast from "react-hot-toast";
 import styles from "../Products.module.css";
-import { useCheckToken } from "../../../hooks/checkToken";
 import { useDeleteProduct } from "../../../hooks/mutations";
 import Modal from "../../../ui/Modal";
 
-function ProductDeleteBtn({ navigate, id }) {
+function ProductDeleteBtn({ id }) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const openModal = () => setDeleteModalOpen(true);
 
   return (
     <>
       <button
         className={styles.productDelModalBtn}
-        onClick={() => useCheckToken(openModal, navigate)}
+        onClick={() => setDeleteModalOpen(true)}
       >
         <HiTrash />
       </button>

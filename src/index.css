@@ -67,6 +67,7 @@ button {
   background-color: var(--input-color);
   padding: 0 15px;
   margin-bottom: 1em;
+  font-family: Vazirmatn, Helvetica, Tahoma, sans-serif;
 }
 
 .input::placeholder {
@@ -126,6 +127,7 @@ button {
   padding: 10px;
   border-radius: 8px;
   background-color: var(--input-color);
+  font-family: Vazirmatn, Helvetica, Tahoma, sans-serif;
 }
 
 .input-label input::placeholder {
@@ -150,12 +152,21 @@ button {
   height: 100vh;
 }
 
-.not-found p:first-child {
+.not-found p:nth-child(1) {
   font-size: 70px;
   font-weight: 700;
+  color: var(--red);
 }
 
-.not-found p:last-child {
+.not-found p:nth-child(2) {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 1.5em;
+}
+
+.not-found a {
+  color: var(--link-color);
   font-size: 20px;
   font-weight: 500;
 }

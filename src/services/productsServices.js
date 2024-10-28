@@ -1,7 +1,7 @@
 import { api } from "./httpReq";
 
-export const getProducts = async (page) => {
-  return await api.get(`/products?page=${page}`);
+export const getProducts = async (page, search) => {
+  return await api.get(`/products?page=${page}&limit=10&name=${search}`);
 };
 
 export const getProductInfo = async ({ queryKey }) => {
@@ -22,7 +22,10 @@ export const editeProduct = async ({ id, data }) => {
 
 export const deleteMultiProduct = async (data) => {
   console.log(data);
-  console.log(JSON.stringify(data));
+  if (!Array.isArray(data.ids)) {
+    data = { ids: [data.ids] };
+  }
+  console.log(data);
 
-  return await api.delete("/products", JSON.stringify(data));
+  return await api.delete("/products", { data });
 };
