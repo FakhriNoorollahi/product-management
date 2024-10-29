@@ -17,7 +17,7 @@ function Product({ product, multipleDelOpen, register }) {
       <td>{id}</td>
       <td>
         <div className={styles.columnBtns}>
-          <ProductInfoBtn id={id} />
+          <ProductInfoBtn id={id} navigate={navigate} />
           <ProductEditeBtn navigate={navigate} id={id} product={product} />
           {multipleDelOpen ? (
             <div className={styles.checkbox}>

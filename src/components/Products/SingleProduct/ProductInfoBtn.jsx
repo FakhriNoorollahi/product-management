@@ -5,8 +5,9 @@ import Loader from "../../../ui/Loader";
 import { useProductInfo } from "../../../hooks/queries";
 import Modal from "../../../ui/Modal";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import { useCheckToken } from "../../../hooks/checkToken";
 
-function ProductInfoBtn({ id }) {
+function ProductInfoBtn({ id, navigate }) {
   const [showProdoctModal, setShowProductModal] = useState(false);
   const onClose = () => setShowProductModal(false);
 
@@ -14,7 +15,7 @@ function ProductInfoBtn({ id }) {
     <>
       <button
         className={styles.productInfoModalBtn}
-        onClick={() => setShowProductModal(true)}
+        onClick={() => useCheckToken(() => setShowProductModal(true), navigate)}
       >
         <HiEye />
       </button>

@@ -6,8 +6,9 @@ import AddEditeModal from "../AddEditeModal";
 import { useEditeProduct } from "../../../hooks/mutations";
 import toast from "react-hot-toast";
 import { getCookie } from "../../../utils/cookie";
+import { useCheckToken } from "../../../hooks/checkToken";
 
-function ProductEditeBtn({ id, product }) {
+function ProductEditeBtn({ id, product, navigate }) {
   const [editeModalOpen, setEditeModalOpen] = useState(false);
   const { mutate } = useEditeProduct();
   const { handleSubmit, register, reset, getValues } = useForm();
@@ -53,7 +54,7 @@ function ProductEditeBtn({ id, product }) {
     <>
       <button
         className={styles.productEditeModalBtn}
-        onClick={() => setEditeModalOpen(true)}
+        onClick={() => useCheckToken(() => setEditeModalOpen(true), navigate)}
       >
         <BiMessageSquareEdit />
       </button>

@@ -3,15 +3,16 @@ import { HiTrash } from "react-icons/hi";
 import styles from "../Products.module.css";
 import { useDeleteProduct } from "../../../hooks/mutations";
 import Modal from "../../../ui/Modal";
+import { useCheckToken } from "../../../hooks/checkToken";
 
-function ProductDeleteBtn({ id }) {
+function ProductDeleteBtn({ id, navigate }) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   return (
     <>
       <button
         className={styles.productDelModalBtn}
-        onClick={() => setDeleteModalOpen(true)}
+        onClick={() => useCheckToken(() => setDeleteModalOpen(true), navigate)}
       >
         <HiTrash />
       </button>

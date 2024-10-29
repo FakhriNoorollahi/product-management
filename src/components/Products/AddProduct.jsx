@@ -6,11 +6,14 @@ import styles from "./Products.module.css";
 import Button from "../../ui/Button";
 import AddEditeModal from "./AddEditeModal";
 import { useAddNewProduct } from "../../hooks/mutations";
+import { useNavigate } from "react-router-dom";
+import { useCheckToken } from "../../hooks/checkToken";
 
 function AddProduct({ onMultiDel, multiDel }) {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const { handleSubmit, register, reset, getValues } = useForm();
   const { mutate } = useAddNewProduct();
+  const navigate = useNavigate();
 
   const addNewProduct = (data) => {
     const { name, price, quantity } = getValues();
@@ -36,10 +39,13 @@ function AddProduct({ onMultiDel, multiDel }) {
       <div>
         <Button
           text={multiDel ? "حذف کنید" : "حذف گروهی"}
-          onButton={() => onMultiDel()}
+          onButton={() => useCheckToken(() => onMultiDel(), navigate)}
           nameOfClass={multiDel && "delete"}
         />
-        <Button text="افزودن محصول" onButton={() => setAddModalOpen(true)} />
+        <Button
+          text="افزودن محصول"
+          onButton={() => useCheckToken(() => setAddModalOpen(true), navigate)}
+        />
         {addModalOpen && (
           <AddEditeModal
             title="ایجاد محصول جدید"

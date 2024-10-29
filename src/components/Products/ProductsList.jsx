@@ -15,8 +15,6 @@ function ProductsList() {
   const [pageSearch, setPageSearch] = useState(1);
   const { data, isFetching, isError } = useProducts(page, search, pageSearch);
 
-  console.log(data, isError);
-
   const [multipleDelOpen, setMultipleDelOpen] = useState(false);
   const { register, getValues, reset } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
